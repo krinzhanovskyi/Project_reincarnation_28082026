@@ -8,14 +8,20 @@ class PocketWindow(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        # Делаем окно без рамок и заставляем висеть поверх всех остальных окон
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
+        # Комбинируем флаги: без рамок + поверх всех + без иконки в панели задач + без фокуса
+        flags = (
+            Qt.WindowType.FramelessWindowHint | 
+            Qt.WindowType.WindowStaysOnTopHint |
+            Qt.WindowType.Tool | 
+            Qt.WindowType.WindowDoesNotAcceptFocus
+        )
+        self.setWindowFlags(flags)
         
-        # Разрешаем прозрачность фона
+        # Разрешаем прозрачность
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-        # Базовый стиль окна: полупрозрачный темный фон и скругленные углы
+        # Стили окна
         self.setStyleSheet("""
             QWidget {
                 background-color: rgba(30, 30, 30, 230);
@@ -24,7 +30,7 @@ class PocketWindow(QWidget):
             }
         """)
 
-        # Добавляем временный текст внутрь окна
+        # Текст
         layout = QVBoxLayout()
         self.label = QLabel("Содержимое папки будет здесь...", self)
         self.label.setStyleSheet("color: white; font-size: 14px; background: transparent; border: none;")
@@ -34,7 +40,6 @@ class PocketWindow(QWidget):
         self.setLayout(layout)
 
     def show_at(self, x, y):
-        # Сдвигаем окно немного вправо и вниз от курсора, чтобы оно не перекрывало саму папку
         self.move(int(x) + 20, int(y) + 20)
         self.show()
 
