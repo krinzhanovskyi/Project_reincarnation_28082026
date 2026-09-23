@@ -8,7 +8,7 @@ class PocketWindow(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        # Комбинируем флаги: без рамок + поверх всех + без иконки в панели задач + без фокуса
+        # flags
         flags = (
             Qt.WindowType.FramelessWindowHint | 
             Qt.WindowType.WindowStaysOnTopHint |
@@ -17,11 +17,11 @@ class PocketWindow(QWidget):
         )
         self.setWindowFlags(flags)
         
-        # Разрешаем прозрачность
+        # screen sets
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-        # Стили окна
+        # style.css window
         self.setStyleSheet("""
             QWidget {
                 background-color: rgba(30, 30, 30, 230);
@@ -30,7 +30,7 @@ class PocketWindow(QWidget):
             }
         """)
 
-        # Текст
+        # text window
         layout = QVBoxLayout()
         self.label = QLabel("Содержимое папки будет здесь...", self)
         self.label.setStyleSheet("color: white; font-size: 14px; background: transparent; border: none;")
